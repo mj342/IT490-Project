@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Login & Registration Page</title>
+
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+/* Set a style for a login Form button */
+button {
+  color: white;
+  padding: 17px 18px;
+  font-size: 15px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+button:hover {
+  opacity: 0.6;
+}
+/* Positioning the login button on the page  */
+.login_Button {
+  background-color: #0dfa00;
+}
+.Login_Form_Button {
+  background-color: #0dfa00;
+}
+.Register_Button {
+  font-size: 15px;
+  background-color: #00d4fa;
+}
+.Registration_Form_Button {
+  background-color: #00d4fa;
+}
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+.container {
+  padding: 16px;
+}
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  padding-top: 60px;
+}
+/* Box Form */
+.boxing_form {
+  background-color: #fcfdff;
+  margin: 5% auto 15% auto; /*  #888 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #c2fffc;
+  width: 40%; /* Could be more or less, depending on screen size */
+}
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<p align="right">
+
+<button class="login_Button" onclick="login()" style="width:auto;"> Login
+</button>
+
+<button class="Register_Button" onclick="register()" style="width:auto;">Register
+</button>
+
+</p>
+
+<br><br><br><br><br><br><br>
+<center><p id='page_text' > <font size="10" color="blue">  Welcome to Ramblers Enterprise </font> </p> </center>
+<center><p id='page_text_2' > <font size="4" color="blue">  Please Register First if you do not have
+an account with us already </font> </p> </center>
+
+                              <!-- Below Creating a Registration Form -->
+
+<div id = "register" class="modal" onsubmit="return validateForm()" method="post">
+  <form name = "registration" method="POST" class="boxing_form" action="../01_php_scripts/RabbitMQClientSample.php">
+      <div class="imgcontainer">
+        <span onclick="document.getElementById('register').style.display='none'" class="close" title="Close Modal">&times;</span>
+        <div class="container">
+          <label for="uname"><br><br><b>Username</b></label>
+          <input type="text" name="username" placeholder="Ex: ut23"  required>
+          <label for="email"><b>Email</b></label>
+          <input type="text" name="email" placeholder="Ex: john12@njit.edu"  required>
+          <label for="psw"><b>Password</b></label>
+          <input type="password" name="password" placeholder="Enter Password"  required>
+          <label for="confirm"><b>Confirm Password</b></label>
+          <input type="password" name="confirm" placeholder="Enter Password again"  required>
+          <button class="Registration_Form_Button" type="submit">Register</button>
+        </div>
+      </div>
+  </form>
+</div>
+                          <!-- Below Creating a Login Form -->
+<div id = "login" class="modal">
+  <form class="boxing_form" method="POST" action="../01_php_scripts/RabbitMQClientSample.php">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('login').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <div class="container">
+        <label for="uname"><br><br><b>Username</b></label>
+        <input type="text" name="username" placeholder="Ex: ut23"  required>
+        <label for="psw"><b>Password</b></label>
+        <input type="password" name="password" placeholder="Enter Password"  required>
+        <button class="Login_Form_Button" type="submit">Login</button>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+function login() {
+  var login_form = document.getElementById("login");
+  var  text = document.getElementById("page_text");
+  var  text_2 = document.getElementById("page_text_2");
+  login_form.style.display = "block";
+  text.style.display = "none";
+  text_2.style.display = "none";
+}
+function register() {
+  var register_form = document.getElementById("register");
+  var  text = document.getElementById("page_text");
+  var  text_2 = document.getElementById("page_text_2");
+  register_form.style.display = "block";
+  text.style.display = "none";
+  text_2.style.display = "none";
+}
+function validateForm() {
+  var pass = document.forms["registration"]["password"].value;
+  var confirm_pass = document.forms["registration"]["confirm"].value;
+  if (pass != confirm_pass) {
+    alert("Password & Confirm Password Fields do not Match !!!");
+    return false;
+    }
+}
+</script>
+</body>
+</html
