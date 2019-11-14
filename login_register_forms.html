@@ -112,8 +112,10 @@ an account with us already </font> </p> </center>
 
                               <!-- Below Creating a Registration Form -->
 
-<div id = "register" class="modal" onsubmit="return validateForm()" method="post">
-  <form name = "registration" method="POST" class="boxing_form" action="../01_php_scripts/RabbitMQClientSample.php">
+<div id = "register" class="modal" onsubmit="return validateForm()"          
+           method="post">
+  <form name = "registration" method="POST" class="boxing_form" 
+                action="scripts/register.php">
       <div class="imgcontainer">
         <span onclick="document.getElementById('register').style.display='none'" class="close" title="Close Modal">&times;</span>
         <div class="container">
@@ -172,5 +174,4 @@ function validateForm() {
 }
 </script>
 </body>
-</html
-
+</html>
