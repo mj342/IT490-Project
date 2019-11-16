@@ -9,12 +9,12 @@ require_once('rabbitMQLib.inc');
 function doLogin($username, $password)
 {
   //Database connection - database server ip, user, pass, database 
-  $database_connection = new mysqli("192.168.86.126", "myuser", "mypass",     
-                                    "smart") ;
+  $database_connection = new mysqli("localhost", "user", "pass",     
+                                    "ramblers") ;
 
   //SQL Query running on the User Table
   $login_query = "select * from login where username = '$username' and 
-                                           password = '$password' " ;
+                  password = '$password' " ;
 
   //Executing SQL Query
   $query_result = mysqli_query($database_connection, $login_query) or      
@@ -38,11 +38,12 @@ function doLogin($username, $password)
 function doRegister($username, $password, $email)
 {
   //Database connection - database server ip, user, pass, database 
-  $database_connection = new mysqli("192.168.86.126", "myuser", "mypass",     
-                                    "smart") ;
+  $database_connection = new mysqli("localhost", "user", "pass",     
+                                    "ramblers") ;
 
   //SQL Query running on the User Table
-  $check_user_query = " select * from user where username = '$username' " ; 
+  $check_user_query = " select * from registration where 
+                        username = '$username' " ; 
                                          
   //Executing SQL Query
   $query_result = mysqli_query($database_connection, $check_user_query) or      
@@ -54,24 +55,26 @@ function doRegister($username, $password, $email)
   //Checking if the User is in our Database 
   if ( $count_rows > 0 ) //if user exists in our database 
   {
-       echo  " User already exists in our Database !!! " ;
-       echo  " Please pick a different username " ;	
-       return 0 ;
+       //echo  " User already exists in our Database !!! " ;
+       return 1 ;
   }
   else
   {
        //If the user is not registered - Getting the user Registered !!!
 
+       $password = sha1 ($password); //hashing the password
+
        //SQL Query running on the User Table
-       $register_query = " INSERT INTO user (username, email, password)  
-                          VALUES ('$username', '$email', '$password') " ;
+       $register_query = " INSERT INTO registration (username, pass,         
+                           email) VALUES ('$username','$password', 
+                           '$email') " ;
 
        //Executing SQL Query
        $query_result = mysqli_query($database_connection, $register_query)     
                        or die(mysqli_error($database_connection)) ; 
 
-       echo " You are Successfully Registered !!! " ;
-       return 1 ;
+       //echo " You are Successfully Registered !!! " ;
+       return 0 ;
   }	
 
 }
@@ -87,11 +90,11 @@ function requestProcessor($request)
   switch ($request['type'])
   {
     case "login":
-      return doLogin($request['username'],$request['password']);
+      return doLogin($request['username'],$request['pass']);
     case "validate_session":
       return doValidate($request['sessionId']);
     case "register":
-      return doRegister($request['username'],$request['password'], 
+      return doRegister($request['username'],$request['pass'], 
                         $request['email']);
 
   }
