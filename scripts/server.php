@@ -4,6 +4,7 @@
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
+require_once('APItest.php');
 
 // Login Function 
 function doLogin($username, $password)
@@ -96,6 +97,8 @@ function requestProcessor($request)
     case "register":
       return doRegister($request['username'],$request['pass'], 
                         $request['email']);
+    case "search";
+      return search($request["search"]);
 
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
