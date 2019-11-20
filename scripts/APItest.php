@@ -1,6 +1,7 @@
 <?php
-require("apiconfig.inc");
+
 function search($source){
+	require("apiconfig.inc");
 	$curl = curl_init();
 
 	//returns error message should executing $curl fail
@@ -19,6 +20,7 @@ function search($source){
 	echo $resp;
 	//close request to clear up some resources
 	curl_close($curl);
+	return $resp;
 
 //---------------------------------------------------------------------------------------------------------------------------------
 }

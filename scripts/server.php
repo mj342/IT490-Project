@@ -88,6 +88,7 @@ function requestProcessor($request)
   {
     return "ERROR: unsupported message type";
   }
+	echo "Processing: " . var_export($request, true);
   switch ($request['type'])
   {
     case "login":
@@ -98,7 +99,7 @@ function requestProcessor($request)
       return doRegister($request['username'],$request['pass'], 
                         $request['email']);
     case "search";
-      return search($request["search"]);
+      return search($request["brand"]);
 
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
