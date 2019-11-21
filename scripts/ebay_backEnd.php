@@ -11,6 +11,7 @@ $type = "search";
 
 $client = new RabbitMQClient('testRabbitMQ.ini', 'testServer');
 
+//Putting brand input from front end on the array
 $req = array("brand"=>$brand, "type"=>$type);
 
 //Client is sending request to the server
