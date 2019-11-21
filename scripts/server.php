@@ -80,6 +80,58 @@ function doRegister($username, $password, $email)
 
 }
 
+function api_data($input)
+{
+     //Database connection - database server ip, user, pass, database  
+     $database_connection = new mysqli("localhost", "user", "pass",   
+                                     "ramblers") ;
+
+     //SQL Query running on the shoes Table
+      $api_get_query = "select * from shoes where brand = '$input'" ;
+
+     //Executing SQL Query
+      $query_result = mysqli_query($database_connection, $api_get_query)     
+                       or die(mysqli_error($database_connection)) ; 
+
+     //Counting Rows in our User Table 
+     $count_rows = mysqli_num_rows($query_result) ; 
+
+     //Checking if the Brand is in our Database 
+     if ( $count_rows > 0 ) //if brand exists in our database 
+     {
+       $brand_exist = " Brand '$input' already exists in our Database !!! " ;
+       $r = mysqli_fetch_array($query_result, MYSQLI_ASSOC) ;	
+       $data ="<b> $brand_exist </b>" . "<br>" . $r['data'] ;
+       return $data;
+     }
+     else
+     {    
+	     // Calling the API for data & storing it in a local variable
+	     $apiData = search($input);
+
+	     //SQL Query running on the shoes Table
+	     $api_query = "INSERT INTO shoes (brand, data )       
+		                   VALUES ('$input','$apiData') " ;
+		                   
+	     //Executing SQL Query
+	     $query_result = mysqli_query($database_connection, $api_query) 
+                             or die(mysqli_error($database_connection)) ; 
+
+	      //SQL Query running on the shoes Table
+	      $api_get_query = "select * from shoes where brand = '$input'" ;
+		          
+	      //Executing SQL Query
+	      $query_result = mysqli_query($database_connection, 
+                             $api_get_query) or                      
+                             die(mysqli_error($database_connection)) ; 
+	 
+	      $r = mysqli_fetch_array($query_result, MYSQLI_ASSOC) ;
+	      $output = "<b>Shoes Brand: </b>" . $r['brand'] . "<br>" . 
+                        "<b>Api Database Returned Data: </b>" . $r['data'];	
+	      return $output;
+      	}
+}
+
 function requestProcessor($request)
 {
   echo "received request".PHP_EOL;
@@ -98,8 +150,10 @@ function requestProcessor($request)
     case "register":
       return doRegister($request['username'],$request['pass'], 
                         $request['email']);
+    //case "search";
+      //return search($request["brand"]);
     case "search";
-      return search($request["brand"]);
+      return api_data($request["brand"]);
 
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
