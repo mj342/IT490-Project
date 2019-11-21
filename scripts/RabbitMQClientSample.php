@@ -9,6 +9,8 @@ require_once('rabbitMQLib.inc');
 $username = $_POST["username"];
 $pass = $_POST["password"];
 $type = "login";
+$delay = 5;
+
 
 $client = new RabbitMQClient('testRabbitMQ.ini', 'testServer');
 
@@ -20,11 +22,19 @@ $response = $client->send_request($req);
 //reply from the mq 
 if ($response == 1)
 {
-    echo " <b> Your Login is Successfull !!! </b> ";
+    $target = "../ebay_frontEnd.html";
+    echo " <b> Your Login is Successfull !!! </b> <br>";
+    print "<b> Sending you to our Main Page to start shopping after $delay   
+           seconds!!! </b>";
+    header("refresh: $delay url = $target");
 }
 else
 {
+    $target = "../login_register_forms.html";
     echo " <b> Wrong User or Password !!! Try Again </b> ";
+    print "<b> Sending you back to login page after $delay seconds !!! </b>";
+    header("refresh: $delay url = $target");
 }
 
 ?>
+
