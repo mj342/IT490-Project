@@ -8,32 +8,7 @@ require_once('APItest.php');
 
 // Login Function 
 function doLogin($username, $password)
-{
-  //Database connection - database server ip, user, pass, database 
-  $database_connection = new mysqli("localhost", "user", "pass",     
-                                    "ramblers") ;
 
-  //SQL Query running on the User Table
-  $login_query = "select * from registration where username = '$username' and 
-                  pass = '$password' " ;
-
-  //Executing SQL Query
-  $query_result = mysqli_query($database_connection, $login_query) or      
-                  die(mysqli_error($database_connection)) ; 
-
-  //Counting Rows in our User Table 
-  $count_rows = mysqli_num_rows($query_result) ; 
-
-  //Checking if User is in our Database 
-  if ($count_rows > 0) // if user is in our database return 1
-  {
-      return 1 ;
-  }
-  else                // else user is not in our database return 0
-  {
-      return 0 ;
-  }
-}
 
 // Registration Function 
 function doRegister($username, $password, $email)
