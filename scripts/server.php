@@ -14,8 +14,8 @@ function doLogin($username, $password)
                                     "ramblers") ;
 
   //SQL Query running on the User Table
-  $login_query = "select * from login where username = '$username' and 
-                  password = '$password' " ;
+  $login_query = "select * from registration where username = '$username' and 
+                  pass = '$password' " ;
 
   //Executing SQL Query
   $query_result = mysqli_query($database_connection, $login_query) or      
@@ -144,7 +144,7 @@ function requestProcessor($request)
   switch ($request['type'])
   {
     case "login":
-      return doLogin($request['username'],$request['password']);
+      return doLogin($request['username'],$request['pass']);
     case "validate_session":
       return doValidate($request['sessionId']);
     case "register":
