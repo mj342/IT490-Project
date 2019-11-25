@@ -4,7 +4,7 @@
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
-require_once('APItest.php');
+//require_once('APItest.php');
 
 // Login Function 
 function doLogin($username, $password)
@@ -80,7 +80,7 @@ function doRegister($username, $password, $email)
 
 }
 
-function api_data($input)
+function api_data($input) #input is shoes brand such as "nike"
 {
      //Database connection - database server ip, user, pass, database  
      $database_connection = new mysqli("localhost", "user", "pass",   
@@ -106,18 +106,19 @@ function api_data($input)
      }
      else
      { 
-		//type and $input is what user inputs on the front end	
-		$type = "search";
+	    //type and $input is what user inputs on the front end	
+	    $type = "Api_search";
 
-		$client = new RabbitMQClient('testRabbitMQ.ini', 'testServer');
+	    $client = new RabbitMQClient('testRabbitMQ.ini', 'testServer');
 
-		//Putting brand input from front end on the array
-		$req = array("brand"=>$input, "type"=>$type);
+	    //Putting brand input from front end on the array
+	    $req = array("brand"=>$input, "type"=>$type);
 
-		//Client is sending request to the server
-		$response = $client->send_request($req);
+            //Database Server is sending request 
+            //to the MQ for API to respond back to DB Server
+	    $response = $client->send_request($req);
 
-		$apiData = $response;
+	    $apiData = $response; //storing api data 
 
 	     // Calling the API for data & storing it in a local variable
 	     //$apiData = search($input);
