@@ -20,9 +20,24 @@ function search($source){
 	echo $resp;
 	//close request to clear up some resources
 	curl_close($curl);
-	return $resp;
+	//NEW CODE
+	foreach($resp -> searchResult -> item -> as $item)
+		{
+			$apiArray[$input] = array(
+			"pic" => $item -> galleryURL;
+			"link" => $item -> viewItemURL;
+			"title" => $item -> title;
+			"price" => $item -> sellingStatus -> currentPrice;
+			);
+		}
+
+	}
+	//return $resp;
+	return $apiArray;
+	
 
 //---------------------------------------------------------------------------------------------------------------------------------
 }
+
 ?>
 
