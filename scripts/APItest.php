@@ -11,7 +11,7 @@ function search($source){
 	// Set some options, we are passing in a useragent too 
 	curl_setopt_array($curl, [
 		CURLOPT_RETURNTRANSFER => 1,
-		CURLOPT_URL =>"http://open.api.ebay.com/shopping?callname=FindProducts&responsencoding=JSON&siteid=0&version=967&QueryKeywords=$source&AvailableItemsOnly=true&MaxEntries=5&appid=$apikey",
+		CURLOPT_URL =>"http://open.api.ebay.com/shopping?callname=FindProducts&responseencoding=JSON&siteid=0&version=967&QueryKeywords=$source&AvailableItemsOnly=true&MaxEntries=5&appid=$apikey",
 		CURLOPT_USERAGENT => 'API sample cURL Request for sneakers',
 	]);
 	//send the request & save the response to $resp
@@ -20,7 +20,7 @@ function search($source){
 	echo $resp;
 	//close request to clear up some resources
 	curl_close($curl);
-	//NEW CODE
+	/*NEW CODE
 	foreach($resp -> searchResult -> item -> as $item)
 		{
 			$apiArray[$input] = array(
@@ -32,12 +32,13 @@ function search($source){
 		}
 
 	}
-	//return $resp;
-	return $apiArray;
-	
+	*/
+	return $resp;
+	//return $apiArray;
 
-//---------------------------------------------------------------------------------------------------------------------------------
 }
+//---------------------------------------------------------------------------------------------------------------------------------
+
 
 ?>
 
