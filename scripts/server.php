@@ -105,9 +105,22 @@ function api_data($input)
        return $data;
      }
      else
-     {    
+     { 
+		//type and $input is what user inputs on the front end	
+		$type = "search";
+
+		$client = new RabbitMQClient('testRabbitMQ.ini', 'testServer');
+
+		//Putting brand input from front end on the array
+		$req = array("brand"=>$input, "type"=>$type);
+
+		//Client is sending request to the server
+		$response = $client->send_request($req);
+
+		$apiData = $response;
+
 	     // Calling the API for data & storing it in a local variable
-	     $apiData = search($input);
+	     //$apiData = search($input);
 
 	     //SQL Query running on the shoes Table
 	     $api_query = "INSERT INTO shoes (brand, data )       
