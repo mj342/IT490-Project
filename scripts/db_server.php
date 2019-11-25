@@ -1,4 +1,4 @@
-s<?php
+<?php
     // RabbitMQ Server File
 require_once('path.inc');
 require_once('get_host_info.inc');
