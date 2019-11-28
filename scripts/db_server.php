@@ -143,7 +143,7 @@ $devices[] = $device;
    {
 	$price = "Price: $" . rand(40,120);
 
-	if ($item['DisplayStockPhotos'] == "true"  )
+	if ($item['DisplayStockPhotos'] == "true" && (strpos($item['Title'], 			'Shoes') == true or strpos($item['Title'], 			'Sneakers') == true))
 	{
 		$api_dataa .=  $item ['ProductID'] . "<br>";
 		$api_dataa .= $item['DisplayStockPhotos']
