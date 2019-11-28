@@ -1,17 +1,16 @@
 <?php
 
-function search($source){
+function search($source)
+{
 	require("apiconfig.inc");
 	$curl = curl_init();
-
-	//returns error message should executing $curl fail
-	//if (!curl_exec($curl)) {
-	//        die('Error: "' . curl_error($curl) . '" - Code: ' . curl_errno($curl));
-	//}
-	// Set some options, we are passing in a useragent too 
 	curl_setopt_array($curl, [
 		CURLOPT_RETURNTRANSFER => 1,
+<<<<<<< HEAD
 		CURLOPT_URL =>"http://open.api.ebay.com/shopping?callname=FindProducts&responsencoding=JSON&siteid=0&version=967&QueryKeywords=$source&AvailableItemsOnly=true&MaxEntries=41&appid=$apikey",
+=======
+		CURLOPT_URL =>"http://open.api.ebay.com/shopping?callname=FindProducts&responseencoding=JSON&siteid=0&version=967&QueryKeywords=$source&AvailableItemsOnly=true&MaxEntries=20&appid=$apikey",
+>>>>>>> 91ba65325a4b3a7c9cc4bab433e62f655dc5839c
 		CURLOPT_USERAGENT => 'API sample cURL Request for sneakers',
 	]);
 	//send the request & save the response to $resp
@@ -19,6 +18,7 @@ function search($source){
 
 	//close request to clear up some resources
 	curl_close($curl);
+<<<<<<< HEAD
 	
 	return $resp;
 
@@ -57,6 +57,13 @@ function search($source){
 	return $api_dataa;
 */
 }
+=======
+	return $resp;
+}	
+
+
+
+>>>>>>> 91ba65325a4b3a7c9cc4bab433e62f655dc5839c
 
 ?>
 
