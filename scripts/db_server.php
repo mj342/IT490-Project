@@ -1,3 +1,4 @@
+
 <?php
     // RabbitMQ Server File
 require_once('path.inc');
@@ -117,34 +118,64 @@ function api_data($input) #input is shoes brand such as "nike"
             //to the MQ for API to respond back to DB Server
    echo "sending message to api";
     $response = $client->send_request($req);
-    
+   
    echo  var_export($response, true);//new line
    $apiData = $response; //storing api data
 
-    // Calling the API for data & storing it in a local variable
-    //$apiData = search($input);
+   ////////////////////////////////////////////////////////////////
 
-    //SQL Query running on the shoes Table
-    $api_query = "INSERT INTO shoes (brand, data )      
-                  VALUES ('$input','$apiData') " ;
+   $devices = array();
+
+   $apiXML = simplexml_load_string($apiData);
+   foreach ($apiXML -> Product as $item)
+   {
+    $device = array();
+       
+foreach ($item as $key => $value)
+{
+$device[(string) $key] = (string) $value;
+        }
+$devices[] = $device;
+   }
+   print_r($devices);
+   $api_dataa = "";
+   foreach ($devices as $item)
+   {
+	$price = "Price: $" . rand(40,120);
+
+	if ($item['DisplayStockPhotos'] == "true"  )
+	{
+		$api_dataa .=  $item ['ProductID'] . "<br>";
+		$api_dataa .= $item['DisplayStockPhotos']
+         			 . "<br>";
+		$api_dataa .=  $item ['Title'] . "<br>";
+       		$api_dataa .= $price . "<br>";
+		$api_dataa .= "<img src = " . $item ['StockPhotoURL'] .
+				">" . "<br><br>";
+
+		$title = $item ['Title'];
+		$title = str_replace ("'", "", $title);
+		$image = $item ['StockPhotoURL'];
+               
+		//SQL Query running on the shoes Table
+    		$api_query = "INSERT INTO shoes (brand, title, price, image ) 					VALUES
+                              ('$input', '$title', '$price',
+     				 '$image' ) " ;
                  
-    //Executing SQL Query
-    $query_result = mysqli_query($database_connection, $api_query)
+    		//Executing SQL Query
+    		$query_result = mysqli_query($database_connection, $api_query)
                              or die(mysqli_error($database_connection)) ;
 
-     //SQL Query running on the shoes Table
-     $api_get_query = "select * from shoes where brand = '$input'" ;
-         
-     //Executing SQL Query
-     $query_result = mysqli_query($database_connection,
-                             $api_get_query) or                      
-                             die(mysqli_error($database_connection)) ;
+}
+   }
+     //Specific data stored in a array and storing array in a variable
+     $api_specific_data = $api_dataa;
 
-     $r = mysqli_fetch_array($query_result, MYSQLI_ASSOC) ;
-     $output = "<b>Shoes Brand: </b>" . $r['brand'] . "<br>" .
-                        "<b>Api Database Returned Data: </b>" . $r['data'];
+     $output = "<b>Shoes Brand: </b>" . $input . "<br>" .
+                        "<b>Api Database Returned Data: </b>" .
+$api_specific_data ;
      return $output;
-      }
+     }
 }
 
 function requestProcessor($request)
@@ -181,8 +212,3 @@ $server->process_requests('requestProcessor');
 echo "testRabbitMQServer END".PHP_EOL;
 exit();
 ?>
-
-	
-	
-	
-
