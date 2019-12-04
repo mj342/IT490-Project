@@ -4,6 +4,7 @@
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
+//require_once('APItest.php');
 
 // Login Function
 function doLogin($username, $password)
@@ -78,33 +79,16 @@ function doRegister($username, $password, $email)
   }
 
 }
-function cart($product_id)
-{
-	$username = "as2867";
-	//store value of button submit in database (should use ajax code)
-
-	//Database connection - database server ip, user, pass, database  
-        $database_connection = new mysqli("localhost", "user", "pass",  
-                                     "ramblers") ;
-	$query = "INSERT INTO collections (username, productID ) VALUES 		('$username', '$product_id') " ;
-
-    	//Executing SQL Query
-    	$query_result = mysqli_query($database_connection, $query)
-                     or die(mysqli_error($database_connection)) ;
-
-	return "Successfully added $product_id to my collection feature";
-
-}
 
 function api_data($input) #input is shoes brand such as "nike"
 {
-     
      //Database connection - database server ip, user, pass, database  
      $database_connection = new mysqli("localhost", "user", "pass",  
                                      "ramblers") ;
+     $user = 'as2867';
 
      //SQL Query running on the shoes Table
-      $api_get_query = "select * from shoes where brand 
+      $api_get_query = "select * from shoes where username = '$user' and brand 
                          = '$input'" ;
 
      //Executing SQL Query
@@ -117,15 +101,13 @@ function api_data($input) #input is shoes brand such as "nike"
      //Checking if the Brand is in our Database
      if ( $count_rows > 0 ) //if brand exists in our database
      {
-       $brand_exist = " Brand '$input'already exists in our 
+       $brand_exist = " Brand '$input' for username $user already exists in our 
                         Database !!! " ;
+       //$r = mysqli_fetch_array($query_result, MYSQLI_ASSOC) ;
        $output = "";
 
        #Using the loop to go through each record/row to collect data
-	$data = mysqli_fetch_all($query_result , MYSQLI_ASSOC);
-	//return $data;	
-	return json_encode($data);
-      /* while ( $data = mysqli_fetch_array($query_result , MYSQLI_ASSOC) )
+       while ( $data = mysqli_fetch_array($query_result , MYSQLI_ASSOC) )
         {
             #local variables to hold a shoes information
             
@@ -143,12 +125,9 @@ function api_data($input) #input is shoes brand such as "nike"
 				">" . "<br><br>";
 
         }
-	$boolean = true;
+
        $data ="<b> $brand_exist </b>" . "<br>" . $output ;
-       
-	//echo $data;
        return $data;
-	*/
      }
 
 
@@ -208,9 +187,9 @@ function api_data($input) #input is shoes brand such as "nike"
 		$image = $item ['StockPhotoURL'];
                
 		//SQL Query running on the shoes Table
-    		$api_query = "INSERT INTO shoes (productID, 
+    		$api_query = "INSERT INTO shoes (username, productID, 
                               brand, title, price, image ) VALUES
-                              ('$product_id','$input',
+                              ('$user','$product_id','$input',
                                '$title', '$price','$image' ) " ;
                  
     		//Executing SQL Query
@@ -247,9 +226,8 @@ echo "Processing: " . var_export($request, true);
     case "register":
       return doRegister($request['username'],$request['pass'],
                         $request['email']);
-    case "collect";
-      return cart($request["product_id"]);
-
+    //case "search";
+      //return search($request["brand"]);
     case "search";
       return api_data($request["brand"]);
 
