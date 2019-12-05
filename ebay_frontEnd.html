@@ -1,19 +1,67 @@
 
+
 <!DOCTYPE html>
 <html>
+<head>
+
+<title>Start Shopping</title>
+
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* Set a style for buttons */
+button {
+  color: white;
+  padding: 17px 18px;
+  font-size: 15px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+button:hover {
+  opacity: 0.6;
+}
+
+/* Positioning the login button on the page  */
+.logout_Button {
+  background-color: #fa0000;
+}
+
+.search {
+  font-size: 15px;
+  background-color: #25ad00;
+}
+
+</style>
+
+</head>
 <body>
 
 <center>
-<h2>Start Shopping</h2>
+<form action = "scripts/logout.php">
+  <p align="right">
+  <button class="logout_Button"  style="width:auto;"> Logout
+  </button>
+  </p>
+</form>
+
+<br>
+<center><p id='page_text' > <font size="10" color="Green"> Start Shopping </font> </p> </center>
+
+<center>
 
 <form action="scripts/ebay_backEnd.php" method = "POST">
 
-  Enter Shoes Brand:<br>
+  <b>Enter Shoes Brand</b><br><br>
   <input type="text" name="brand" >
   <br>
-  
-  <input type="submit" value="Search">
+  <button class="search" style="width:auto;" type="submit"> Search </button>
 
-</form> 
+</form>
+
 </center>
+
+</body>
+
 </html>
