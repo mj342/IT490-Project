@@ -5,6 +5,8 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
+session_start();
+
 //Getting the brand name
 $brand = $_POST["brand"];
 $type = "search";
@@ -20,13 +22,18 @@ $obj = json_decode($response, true);
 
 //echo var_export($obj,true); 
 
-?>	
+?>
+   	 <form action = "../ramblers_main_page.html" >
+               <input type="submit" value="Go to Ramblers Main Page"/> <br>
+         </form>
+	
     <?php foreach($obj as $row):?>
 		
          <div>
-              <img src= <?php echo $row['image']; ?>  > <br>
-              <?php echo $row["title"]; ?> <br> 
-              <?php echo $row['price'];?> <br>      
+              <img src= <?php echo $row['image']; ?> 
+                   height= "500" width = "500" > <br>
+              <?php echo "Shoes Name: " . $row["title"]; ?> <br> 
+              <?php echo "Price: $"     . $row['price'];?> <br>      
          </div>
          
          <form id="form_<?php echo $row['productID'];?>" 
@@ -35,7 +42,7 @@ $obj = json_decode($response, true);
                <input type="hidden" name="product_id" value="<?php echo 
 			$row['productID'];?>"/>
 
-               <input type="submit" value="Add Item to Cart?"/> <br>
+               <input type="submit" value="Add Item to my Collection?"/> <br>
          </form>
 
     <?php endforeach; ?>
@@ -53,13 +60,22 @@ function add_to_cart(form) {
     }
   };
   
-  xhttp.open("POST", "collections.php", true);
+  xhttp.open("POST", "add_to_collections.php", true);
   xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   var data = "product_id=" + form.product_id.value ;
   xhttp.send(data);
 }
 
 </script>
+
+
+
+
+
+
+
+
+
 
 
 
