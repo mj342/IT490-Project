@@ -68,13 +68,23 @@ span.psw {
   height: 100%; /* Full height */
   padding-top: 60px;
 }
-/* Box Form */
+
+/* Box Form for registration */
 .boxing_form {
-  background-color: #fcfdff;
-  margin: 5% auto 15% auto; /*  #888 5% from the top, 15% from the bottom and centered */
+  background-color: #e6f5ff;
+  margin: 5% auto 15% auto; /*  #888 5% from the bottom and centered */
   border: 1px solid #c2fffc;
   width: 40%; /* Could be more or less, depending on screen size */
 }
+
+/* Box Form for login */
+.boxing_form_login {
+  background-color: #e6ffe6;
+  margin: 5% auto 15% auto; /*  #888 5% from the bottom and centered */
+  border: 1px solid #c2fffc;
+  width: 40%; /* Could be more or less, depending on screen size */
+}
+
 /* The Close Button (x) */
 .close {
   position: absolute;
@@ -93,7 +103,7 @@ span.psw {
 
 </head>
 
-<body>
+<body background = "shoes1.jpg">
 
 <p align="right">
 
@@ -105,10 +115,14 @@ span.psw {
 
 </p>
 
-<br><br><br><br><br><br><br>
-<center><p id='page_text' > <font size="10" color="blue">  Welcome to Ramblers Enterprise </font> </p> </center>
-<center><p id='page_text_2' > <font size="4" color="blue">  Please Register First if you do not have
-an account with us already </font> </p> </center>
+<br>
+<p id='page_text' > <font size="10" color="white">  Welcome to <br> 
+Ramblers Enterprise </font> 
+</p> 
+
+<p id='page_text_2' > <font size="4" color="white">  <b>Please Register First <br> if you do not have
+an account with us already </b> </font> 
+</p> 
 
                               <!-- Below Creating a Registration Form -->
 
@@ -127,14 +141,15 @@ an account with us already </font> </p> </center>
           <input type="password" name="password" placeholder="Enter Password"  required>
           <label for="confirm"><b>Confirm Password</b></label>
           <input type="password" name="confirm" placeholder="Enter Password again"  required>
-          <button class="Registration_Form_Button" type="submit">Register</button>
+          <button class="Registration_Form_Button" type="submit"> Register
+</button>
         </div>
       </div>
   </form>
 </div>
                           <!-- Below Creating a Login Form -->
 <div id = "login" class="modal">
-  <form class="boxing_form" method="POST" action="scripts/RabbitMQClientSample.php">
+  <form class="boxing_form_login" method="POST" action="scripts/RabbitMQClientSample.php">
     <div class="imgcontainer">
       <span onclick="document.getElementById('login').style.display='none'" class="close" title="Close Modal">&times;</span>
       <div class="container">
@@ -142,7 +157,7 @@ an account with us already </font> </p> </center>
         <input type="text" name="username" placeholder="Ex: ut23"  required>
         <label for="psw"><b>Password</b></label>
         <input type="password" name="password" placeholder="Enter Password"  required>
-        <button class="Login_Form_Button" type="submit">Login</button>
+        <button class="Login_Form_Button" type="submit"> Login </button>
       </div>
     </div>
   </form>
