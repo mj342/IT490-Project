@@ -22,12 +22,26 @@ $response = $client->send_request($req);
 //reply from the mq 
 if ($response == 1)
 {
+    $target = "../login_register_forms.html";
+    $delay = 5;
     echo "<b> User already exists in our Database !!! </b>";
-    echo  " <br> <b> Please pick a different username !! </b> " ;	
+    echo  " <br> <b> Please pick a different username !! </b> " ;
+    print "<br> <b> Sending you back to Registration page after $delay seconds !!! </b>";
+    header("refresh: $delay url = $target");	
 }
 else
 {
-    echo " <b> You are Successfully Registered !!! </b> ";
+    $target = "../login_register_forms.html";
+    $delay = 3;
+    echo "<b> You are Successfully Registered $username !!! </b> <br> ";
+    echo "<b> Please Login !!! </b> <br> ";
+    print "<b> Sending you back to Login page after $delay seconds !!! </b>";
+    header("refresh: $delay url = $target");
 }
 
 ?>
+
+
+
+
+
