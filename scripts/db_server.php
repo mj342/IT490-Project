@@ -1,6 +1,8 @@
 
 <?php
-    // RabbitMQ Server File
+
+
+   			 // Database Server File
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
@@ -11,6 +13,8 @@ function doLogin($username, $password)
   //Database connection - database server ip, user, pass, database
   $database_connection = new mysqli("localhost", "user", "pass",    
                                     "ramblers") ;
+
+  $password = sha1 ($password); //hashing the password
 
   //SQL Query running on the User Table
   $login_query = "select * from registration where username = '$username' and
@@ -40,7 +44,7 @@ function doRegister($username, $password, $email)
   //Database connection - database server ip, user, pass, database
   $database_connection = new mysqli("localhost", "user", "pass",    
                                     "ramblers") ;
-
+	 
   //SQL Query running on the User Table
   $check_user_query = " select * from registration where
                         username = '$username' " ;
@@ -78,9 +82,10 @@ function doRegister($username, $password, $email)
   }
 
 }
-function cart($product_id)
+function add_to_collection($product_id, $username)
 {
-	$username = "as2867";
+        
+        //$username = "as2867";
 	//store value of button submit in database (should use ajax code)
 
 	//Database connection - database server ip, user, pass, database  
@@ -92,8 +97,47 @@ function cart($product_id)
     	$query_result = mysqli_query($database_connection, $query)
                      or die(mysqli_error($database_connection)) ;
 
-	return "Successfully added $product_id to my collection feature";
+	return "Successfully added product: $product_id 
+               to my collection feature for username: $username";
 
+}
+
+function view_collection($username)
+{
+	
+  	//Database connection - database server ip, user, pass, database
+  	$database_connection = new mysqli("localhost", "user", "pass",
+                                  "ramblers") ;
+ 	 //SQL Query running on the shoes Table
+   	$query = "select * from shoes, collections where
+            collections.productID = shoes.productID and
+            collections.username = '$username'" ;
+  	//Executing SQL Query
+   	$query_result = mysqli_query($database_connection, $query)
+                    or die(mysqli_error($database_connection)) ;
+
+   	 $data = mysqli_fetch_all($query_result , MYSQLI_ASSOC);
+	//new code
+   	 return json_encode($data);
+
+}
+
+function remove_from_collection($product_id, $username)
+{
+  	
+  	//Database connection - database server ip, user, pass, database
+  	$database_connection = new mysqli("localhost", "user", "pass",
+                                  "ramblers") ;
+  	//SQL Query running on the shoes Table
+   	$query = "delete from collections where
+                 username = '$username' and
+                 productID = '$product_id'";
+  	//Executing SQL Query
+   	$query_result = mysqli_query($database_connection, $query)
+                    or die(mysqli_error($database_connection)) ;
+
+    	return "Successfully removed $product_id 
+               from my collection feature";
 }
 
 function api_data($input) #input is shoes brand such as "nike"
@@ -119,40 +163,14 @@ function api_data($input) #input is shoes brand such as "nike"
      {
        $brand_exist = " Brand '$input'already exists in our 
                         Database !!! " ;
-       $output = "";
 
-       #Using the loop to go through each record/row to collect data
+       #storing all records in local variable called data
 	$data = mysqli_fetch_all($query_result , MYSQLI_ASSOC);
-	//return $data;	
+	
 	return json_encode($data);
-      /* while ( $data = mysqli_fetch_array($query_result , MYSQLI_ASSOC) )
-        {
-            #local variables to hold a shoes information
-            
-	    $brand = $data[ "brand" ];
-            $title = $data[ "title" ];
-            $price  = $data["price"];
-            $image  = $data["image"];
-
-
-            #print statements to display the content to a specific user
-            $output .= "<b>Brand: </b> $brand " . "   "  ;
-            $output .= "<b>Title: </b> $title " . "   "  ;
-            $output .= "<b>Price: </b> $price " . "   "  ;
-            $output .= "<b>Image: </b>" . "<img src = " .$image .
-				">" . "<br><br>";
-
-        }
-	$boolean = true;
-       $data ="<b> $brand_exist </b>" . "<br>" . $output ;
-       
-	//echo $data;
-       return $data;
-	*/
+      
      }
-
-
-    
+ 
      else
      {
 	   //type and $input is what user inputs on the front end
@@ -225,7 +243,22 @@ function api_data($input) #input is shoes brand such as "nike"
      $output = "<b>Shoes Brand: </b>" . $input . "<br>" .
                         "<b>Api Database Returned Data: </b>" .
                          $api_specific_data ;
-     return $output;
+
+      //SQL Query running on the shoes Table
+      $api_get_query = "select * from shoes where brand 
+                         = '$input'" ;
+
+     //Executing SQL Query
+      $query_result = mysqli_query($database_connection, $api_get_query)    
+                       or die(mysqli_error($database_connection)) ;
+
+      
+      #storing all records in local variable called data
+	$data = mysqli_fetch_all($query_result , MYSQLI_ASSOC);
+	
+	return json_encode($data);
+
+     //return $output;
      }
 }
 
@@ -248,7 +281,11 @@ echo "Processing: " . var_export($request, true);
       return doRegister($request['username'],$request['pass'],
                         $request['email']);
     case "collect";
-      return cart($request["product_id"]);
+      return add_to_collection($request["product_id"],$request['username']);
+    case "view";
+      return view_collection($request["username"]);
+    case "remove";
+      return remove_from_collection($request["product_id"],$request['username']);
 
     case "search";
       return api_data($request["brand"]);
