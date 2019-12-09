@@ -32,7 +32,7 @@ if ($response == 1)
 else
 {
     $target = "../login_register_forms.html";
-    $delay = 3;
+    $delay = 4;
     echo "<b> You are Successfully Registered $username !!! </b> <br> ";
     echo "<b> Please Login !!! </b> <br> ";
     print "<b> Sending you back to Login page after $delay seconds !!! </b>";
