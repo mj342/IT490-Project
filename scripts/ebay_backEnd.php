@@ -31,7 +31,7 @@ $obj = json_decode($response, true);
 		
          <div>
               <img src= <?php echo $row['image']; ?> 
-                   height= "500" width = "500" > <br>
+                   height= "400" width = "400" > <br>
               <?php echo "Shoes Name: " . $row["title"]; ?> <br> 
               <?php echo "Price: $"     . $row['price'];?> <br>      
          </div>
