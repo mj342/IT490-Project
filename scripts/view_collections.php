@@ -34,8 +34,9 @@ $obj = json_decode($response, true);
          <div>
               <img src= <?php echo $row['image']; ?>  
                         height= "400" width = "400" > <br>
-              <?php echo "Shoes Name: " . $row["title"]; ?> <br> 
-              <?php echo "Price: $"     . $row['price'];?> <br>      
+              <?php echo "<b>Shoes Name:</b> " . $row["title"]; ?> <br> 
+              <?php echo "<b>Price:</b> $"     . $row['price'];?> <br>   
+              <?php echo "<b>Product ID:</b> " . $row['productID'];?> <br>   
          </div>
          
          <form id="form_<?php echo $row['productID'];?>" 

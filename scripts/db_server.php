@@ -97,8 +97,7 @@ function add_to_collection($product_id, $username)
     	$query_result = mysqli_query($database_connection, $query)
                      or die(mysqli_error($database_connection)) ;
 
-	return "Successfully added product: $product_id 
-               to my collection feature for username: $username";
+	return "Successfully added product:<b> $product_id </b>to my collection feature for username:<b> $username </b>";
 
 }
 
@@ -136,8 +135,7 @@ function remove_from_collection($product_id, $username)
    	$query_result = mysqli_query($database_connection, $query)
                     or die(mysqli_error($database_connection)) ;
 
-    	return "Successfully removed $product_id 
-               from my collection feature";
+    	return "Successfully removed<b> $product_id </b>from my collection feature for username:<b> $username </b>";
 }
 
 function api_data($input) #input is shoes brand such as "nike"
@@ -208,7 +206,7 @@ function api_data($input) #input is shoes brand such as "nike"
            $api_dataa = "";
    foreach ($devices as $item)
    {
-	$price = "Price: $" . rand(40,120);
+	$price = rand(40,120);
 
 	if ($item['DisplayStockPhotos'] == "true" && (strpos($item['Title'], 			'Shoes') == true or strpos($item['Title'], 			'Sneakers') == true))
 	{
@@ -235,14 +233,14 @@ function api_data($input) #input is shoes brand such as "nike"
     		$query_result = mysqli_query($database_connection, $api_query)
                              or die(mysqli_error($database_connection)) ;
 
-}
+         }
    }
      //Specific data stored in a array and storing array in a variable
-     $api_specific_data = $api_dataa;
+     //$api_specific_data = $api_dataa;
 
-     $output = "<b>Shoes Brand: </b>" . $input . "<br>" .
-                        "<b>Api Database Returned Data: </b>" .
-                         $api_specific_data ;
+     //$output = "<b>Shoes Brand: </b>" . $input . "<br>" .
+     //                   "<b>Api Database Returned Data: </b>" .
+     //                    $api_specific_data ;
 
       //SQL Query running on the shoes Table
       $api_get_query = "select * from shoes where brand 
@@ -257,8 +255,6 @@ function api_data($input) #input is shoes brand such as "nike"
 	$data = mysqli_fetch_all($query_result , MYSQLI_ASSOC);
 	
 	return json_encode($data);
-
-     //return $output;
      }
 }
 
