@@ -24,7 +24,8 @@ $response = $client->send_request($req);
 if ($response == 1)
 {
     $_SESSION["username"] = $username;
-    $target = "../ramblers_main_page.html";
+    $_SESSION["logged"] = true;
+    $target = "../ramblers_main_page.php";
     echo " <b> Valid Credentials $username !!! </b> <br>";
     print "<b> Sending you to our Main Page to start shopping after $delay   
            seconds!!! </b>";

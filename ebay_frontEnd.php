@@ -1,5 +1,25 @@
 
 
+<?php
+
+session_start();
+
+//put this below in code ramblers main page and ebay front end
+$badmessage = "<b>  LOGIN FIRST !!!
+               <br> You are not authorized to access this page directly !!!
+               <br> Sending you back to login page after 4 seconds !!!
+               </b>";
+$delay = 4;
+$badtarget = "login_register_forms.html";
+if ( ! isset ( $_SESSION["logged"] ) )
+{
+      echo "$badmessage";
+      header ( "refresh: $delay url = $badtarget" );
+      exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>

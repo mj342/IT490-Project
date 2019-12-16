@@ -24,7 +24,7 @@ $obj = json_decode($response, true);
 
 ?>
 
- 	<form action = "../ramblers_main_page.html" >
+ 	<form action = "../ramblers_main_page.php" >
                <input type="submit" value="Go to Ramblers Main Page"/> <br>
          </form>
 
