@@ -1,7 +1,5 @@
 
 <?php
-
-
    			 // Database Server File
 require_once('path.inc');
 require_once('get_host_info.inc');
@@ -80,8 +78,8 @@ function doRegister($username, $password, $email)
        //echo " You are Successfully Registered !!! " ;
        return 0 ;
   }
-
 }
+
 function add_to_collection($product_id, $username)
 {       
 	//Database connection - database server ip, user, pass, database  
@@ -114,7 +112,6 @@ function add_to_collection($product_id, $username)
                      or die(mysqli_error($database_connection)) ;
 
 	return "Successfully added product:<b> $product_id </b>to my collection feature for username:<b> $username </b>";
-
 }
 
 function view_collection($username)
@@ -135,7 +132,6 @@ function view_collection($username)
    	 $data = mysqli_fetch_all($query_result , MYSQLI_ASSOC);
 	
    	 return json_encode($data);
-
 }
 
 function remove_from_collection($product_id, $username)
