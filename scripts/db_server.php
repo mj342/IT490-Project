@@ -83,8 +83,7 @@ function doRegister($username, $password, $email)
 
 }
 function add_to_collection($product_id, $username)
-{
-        
+{       
 	//Database connection - database server ip, user, pass, database  
         $database_connection = new mysqli("localhost", "user", "pass",  
                                      "ramblers") ;
@@ -180,10 +179,10 @@ function api_data($input) #input is shoes brand such as "nike"
      //Checking if the Brand is in our Database
      if ( $count_rows > 0 ) //if brand exists in our database
      {
-       $brand_exist = " Brand '$input'already exists in our 
+       $brand_exist = " Brand '$input' already exists in our 
                         Database !!! " ;
 
-       #storing all records in local variable called data
+        #storing all records from shoes table in local variable called data
 	$data = mysqli_fetch_all($query_result , MYSQLI_ASSOC);
 	
 	return json_encode($data);
@@ -200,16 +199,14 @@ function api_data($input) #input is shoes brand such as "nike"
 	   //Putting brand input from front end on the array
 	   $req = array("brand"=>$input, "type"=>$type);
 
-		    //Database Server is sending request
-		    //to the MQ for API to respond back to DB Server
-	   echo "sending message to api";
+	   //Database Server is sending request
+	   //to the MQ for API to respond back to DB Server
 	    $response = $client->send_request($req);
 	   
-	   echo  var_export($response, true);//new line
+	   echo  var_export($response, true);
 	   $apiData = $response; //storing api data
 
-   ////////////////////////////////////////////////////////////////
-
+           // Parsing through the api data to extract specific data
 	   $devices = array();
 
 	   $apiXML = simplexml_load_string($apiData);
@@ -224,50 +221,43 @@ function api_data($input) #input is shoes brand such as "nike"
                 $devices[] = $device;
            }
            print_r($devices);
-           $api_dataa = "";
-   foreach ($devices as $item)
-   {
-	$price = rand(40,120);
 
-	if ($item['DisplayStockPhotos'] == "true" && (strpos($item['Title'], 			'Shoes') == true or strpos($item['Title'], 			'Sneakers') == true))
-	{
-		$api_dataa .=  $item ['ProductID'] . "<br>";
-		$api_dataa .= $item['DisplayStockPhotos']
-         			 . "<br>";
-		$api_dataa .=  $item ['Title'] . "<br>";
-       		$api_dataa .= $price . "<br>";
-		$api_dataa .= "<img src = " . $item ['StockPhotoURL'] .
-				">" . "<br><br>";
-		
-		$product_id = $item ['ProductID'] ;
-		$title = $item ['Title'];
-		$title = str_replace ("'", "", $title);
-		$image = $item ['StockPhotoURL'];
-               
-		//SQL Query running on the shoes Table
-    		$api_query = "INSERT INTO shoes (productID, 
-                              brand, title, price, image ) VALUES
-                              ('$product_id','$input',
-                               '$title', '$price','$image' ) " ;
-                 
-    		//Executing SQL Query
-    		$query_result = mysqli_query($database_connection, $api_query)
-                             or die(mysqli_error($database_connection)) ;
+	   foreach ($devices as $item)
+	   {
+		$price = rand(40,120);
 
-         }
-   }
-     //Specific data stored in a array and storing array in a variable
-     //$api_specific_data = $api_dataa;
+		if ($item['DisplayStockPhotos'] == "true" &&    
+                   (strpos($item['Title'], 'Shoes') == true or        
+                    strpos($item['Title'], 'Sneakers') == true))
+		{
+			$product_id = $item ['ProductID'] ;
+			$title = $item ['Title'];
+			$title = str_replace ("'", "", $title);
+			$image = $item ['StockPhotoURL'];
+		       
+			//SQL Query running on the shoes Table
+	    		$api_query = "INSERT INTO shoes (productID, 
+		                      brand, title, price, image ) VALUES
+		                      ('$product_id','$input',
+		                       '$title', '$price','$image' ) " ;
+		         
+	    		//Executing SQL Query
+	    		$query_result = mysqli_query($database_connection, 
+                                      $api_query) or  
+                                      die(mysqli_error($database_connection)) ;
 
+		}
+	    }
+  
       //SQL Query running on the shoes Table
       $api_get_query = "select * from shoes where brand 
                          = '$input'" ;
 
-     //Executing SQL Query
+      //Executing SQL Query
       $query_result = mysqli_query($database_connection, $api_get_query)    
                        or die(mysqli_error($database_connection)) ;
     
-      #storing all records in local variable called data
+        #storing all records in local variable called data
 	$data = mysqli_fetch_all($query_result , MYSQLI_ASSOC);
 	
 	return json_encode($data);
@@ -297,8 +287,8 @@ echo "Processing: " . var_export($request, true);
     case "view";
       return view_collection($request["username"]);
     case "remove";
-      return remove_from_collection($request["product_id"],$request['username']);
-
+      return remove_from_collection($request["product_id"],  
+                                    $request['username']);
     case "search";
       return api_data($request["brand"]);
 
