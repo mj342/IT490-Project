@@ -186,7 +186,7 @@ function api_data($input) #input is shoes brand such as "nike"
 	   echo "sending message to api";
 	    $response = $client->send_request($req);
 	   
-	   echo  var_export($response, true);//new line
+	   //echo  var_export($response, true);//new line
 	   $apiData = $response; //storing api data
 
    ////////////////////////////////////////////////////////////////
@@ -208,7 +208,7 @@ function api_data($input) #input is shoes brand such as "nike"
            $api_dataa = "";
    foreach ($devices as $item)
    {
-	$price = "Price: $" . rand(40,120);
+	$price = rand(40,120);
 
 	if ($item['DisplayStockPhotos'] == "true" && (strpos($item['Title'], 			'Shoes') == true or strpos($item['Title'], 			'Sneakers') == true))
 	{
