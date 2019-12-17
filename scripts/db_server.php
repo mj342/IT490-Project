@@ -118,8 +118,7 @@ function add_to_collection($product_id, $username)
 }
 
 function view_collection($username)
-{
-	
+{	
   	//Database connection - database server ip, user, pass, database
   	$database_connection = new mysqli("localhost", "user", "pass",
                                   "ramblers") ;
@@ -140,8 +139,7 @@ function view_collection($username)
 }
 
 function remove_from_collection($product_id, $username)
-{
-  	
+{ 	
   	//Database connection - database server ip, user, pass, database
   	$database_connection = new mysqli("localhost", "user", "pass",
                                   "ramblers") ;
@@ -159,8 +157,7 @@ function remove_from_collection($product_id, $username)
 }
 
 function api_data($input) #input is shoes brand such as "nike"
-{
-     
+{    
      //Database connection - database server ip, user, pass, database  
      $database_connection = new mysqli("localhost", "user", "pass",  
                                      "ramblers") ;
@@ -177,16 +174,12 @@ function api_data($input) #input is shoes brand such as "nike"
      $count_rows = mysqli_num_rows($query_result) ;
 
      //Checking if the Brand is in our Database
-     if ( $count_rows > 0 ) //if brand exists in our database
+     if ( $count_rows > 0 ) 
      {
-       $brand_exist = " Brand '$input' already exists in our 
-                        Database !!! " ;
-
         #storing all records from shoes table in local variable called data
 	$data = mysqli_fetch_all($query_result , MYSQLI_ASSOC);
 	
-	return json_encode($data);
-      
+	return json_encode($data);     
      }
  
      else
@@ -249,18 +242,18 @@ function api_data($input) #input is shoes brand such as "nike"
 		}
 	    }
   
-      //SQL Query running on the shoes Table
-      $api_get_query = "select * from shoes where brand 
-                         = '$input'" ;
+	    //SQL Query running on the shoes Table
+	    $api_get_query = "select * from shoes where brand 
+		                 = '$input'" ;
 
-      //Executing SQL Query
-      $query_result = mysqli_query($database_connection, $api_get_query)    
-                       or die(mysqli_error($database_connection)) ;
-    
-        #storing all records in local variable called data
-	$data = mysqli_fetch_all($query_result , MYSQLI_ASSOC);
-	
-	return json_encode($data);
+	    //Executing SQL Query
+	    $query_result = mysqli_query($database_connection, $api_get_query)  
+                            or die(mysqli_error($database_connection)) ;
+	    
+	    #storing all records in local variable called data
+	    $data = mysqli_fetch_all($query_result , MYSQLI_ASSOC);
+		
+	    return json_encode($data);
      }
 }
 
