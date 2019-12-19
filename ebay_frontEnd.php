@@ -1,5 +1,4 @@
 
-
 <?php
 
 session_start();
@@ -19,6 +18,7 @@ if ( ! isset ( $_SESSION["logged"] ) )
 }
 
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -48,6 +48,10 @@ button:hover {
   background-color: #fa0000;
 }
 
+.Main_Page_Button {
+  background-color: #ff6d05;
+}
+
 .search {
   font-size: 15px;
   background-color:   #0d16e4  ;
@@ -58,7 +62,6 @@ button:hover {
 </head>
 <body background = "shoes3.jpg">
 
-<center>
 <form action = "scripts/logout.php">
   <p align="right">
   <button class="logout_Button"  style="width:auto;"> Logout
@@ -66,7 +69,14 @@ button:hover {
   </p>
 </form>
 
-<br>
+<form action = "ramblers_main_page.php">
+ <p align="left">
+  <button class="Main_Page_Button"  style="width:auto;">Go to Ramblers Main Page
+  </button>
+ </p>
+</form>
+
+
 <center>
  
 <p id='page_text' > <font size="10" color=" #c2d1e6 ">
@@ -87,7 +97,7 @@ button:hover {
   &nbsp;&nbsp;&nbsp;&nbsp;
   &nbsp;&nbsp;&nbsp;&nbsp;
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <b>Enter Shoes Brand</b><br><br>
+  <b>Enter Shoes Brand</b><br>
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   &nbsp;&nbsp;&nbsp;&nbsp;
   &nbsp;&nbsp;&nbsp;&nbsp;
@@ -115,6 +125,10 @@ button:hover {
 </body>
 
 </html>
+
+
+
+
 
 
 
