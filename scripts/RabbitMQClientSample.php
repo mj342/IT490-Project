@@ -34,7 +34,7 @@ if ($response == 1)
 else
 {
     $target = "../login_register_forms.html";
-    echo " <b> Wrong User or Password !!! Try Again </b> ";
+    echo " <b> Wrong User or Password !!! Try Again </b> <br> ";
     print "<b> Sending you back to login page after $delay seconds !!! </b>";
     header("refresh: $delay url = $target");
 }

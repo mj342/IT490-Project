@@ -20,7 +20,10 @@ $response = $client->send_request($req);
 
 $obj = json_decode($response, true);
 
-//echo var_export($obj,true); 
+if (empty($obj))
+{
+   echo "<h1>No Collections for User: $username </h1>";
+}
 
 ?>
 
