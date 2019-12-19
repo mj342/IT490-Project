@@ -1,4 +1,23 @@
 
+<?php
+
+session_start();
+
+//put this below in code ramblers main page and ebay front end
+$badmessage = "<b>  LOGIN FIRST !!!
+               <br> You are not authorized to access this page directly !!!
+               <br> Sending you back to login page after 4 seconds !!!
+               </b>";
+$delay = 4;
+$badtarget = "login_register_forms.html";
+if ( ! isset ( $_SESSION["logged"] ) )
+{
+      echo "$badmessage";
+      header ( "refresh: $delay url = $badtarget" );
+      exit();
+}
+
+?>
 
 <!DOCTYPE html>
 
@@ -71,7 +90,7 @@ button:hover {
 <br><br><br>
 
 
-<form action = "ebay_frontEnd.html">
+<form action = "ebay_frontEnd.php">
 
 <p id='page_text' > <font size="6" color=" #FFC300 ">  Check out 
 our Exciting New Products </font> </p> 

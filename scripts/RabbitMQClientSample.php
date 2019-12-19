@@ -11,7 +11,7 @@ require_once('rabbitMQLib.inc');
 $username = $_POST["username"];
 $pass = $_POST["password"];
 $type = "login";
-$delay = 5;
+$delay = 4;
 
 $client = new RabbitMQClient('testRabbitMQ.ini', 'testServer');
 
@@ -24,8 +24,9 @@ $response = $client->send_request($req);
 if ($response == 1)
 {
     $_SESSION["username"] = $username;
-    $target = "../ramblers_main_page.html";
-    echo " <b> Valid Credentials !!! </b> <br>";
+    $_SESSION["logged"] = true;
+    $target = "../ramblers_main_page.php";
+    echo " <b> Valid Credentials $username !!! </b> <br>";
     print "<b> Sending you to our Main Page to start shopping after $delay   
            seconds!!! </b>";
     header("refresh: $delay url = $target");
@@ -33,7 +34,7 @@ if ($response == 1)
 else
 {
     $target = "../login_register_forms.html";
-    echo " <b> Wrong User or Password !!! Try Again </b> ";
+    echo " <b> Wrong User or Password !!! Try Again </b> <br> ";
     print "<b> Sending you back to login page after $delay seconds !!! </b>";
     header("refresh: $delay url = $target");
 }

@@ -23,18 +23,19 @@ $obj = json_decode($response, true);
 //echo var_export($obj,true); 
 
 ?>
-   	 <form action = "../ramblers_main_page.html" >
+   	 <form action = "../ramblers_main_page.php" >
                <input type="submit" value="Go to Ramblers Main Page"/> <br>
          </form>
 	
     <?php foreach($obj as $row):?>
 		
-         <div>
+       <div>
               <img src= <?php echo $row['image']; ?> 
-                   height= "500" width = "500" > <br>
-              <?php echo "Shoes Name: " . $row["title"]; ?> <br> 
-              <?php echo "Price: $"     . $row['price'];?> <br>      
-         </div>
+                   height= "400" width = "400" > <br>
+              <?php echo "<b>Shoes Name:</b> " . $row["title"]; ?> <br> 
+              <?php echo "<b>Price:</b> $"     . $row['price'];?> <br>  
+              <?php echo "<b>Product ID:</b> " . $row['productID'];?> <br>      
+       </div>
          
          <form id="form_<?php echo $row['productID'];?>" 
                onsubmit = "add_to_cart(this); return false;"  method="POST">

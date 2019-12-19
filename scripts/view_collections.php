@@ -20,11 +20,14 @@ $response = $client->send_request($req);
 
 $obj = json_decode($response, true);
 
-//echo var_export($obj,true); 
+if (empty($obj))
+{
+   echo "<h1>No Collections for User: $username </h1>";
+}
 
 ?>
 
- 	<form action = "../ramblers_main_page.html" >
+ 	<form action = "../ramblers_main_page.php" >
                <input type="submit" value="Go to Ramblers Main Page"/> <br>
          </form>
 
@@ -33,9 +36,10 @@ $obj = json_decode($response, true);
        <div>	
          <div>
               <img src= <?php echo $row['image']; ?>  
-                        height= "500" width = "500" > <br>
-              <?php echo "Shoes Name: " . $row["title"]; ?> <br> 
-              <?php echo "Price: $"     . $row['price'];?> <br>      
+                        height= "400" width = "400" > <br>
+              <?php echo "<b>Shoes Name:</b> " . $row["title"]; ?> <br> 
+              <?php echo "<b>Price:</b> $"     . $row['price'];?> <br>   
+              <?php echo "<b>Product ID:</b> " . $row['productID'];?> <br>   
          </div>
          
          <form id="form_<?php echo $row['productID'];?>" 
